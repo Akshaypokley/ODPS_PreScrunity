@@ -14,7 +14,7 @@ import static Utilities.UtilityDirectory.openBrowser;
 public class TestHomePage {
 
     WebDriver driver;
-
+    HomePage homePage=new HomePage(driver);
     @BeforeTest
     public void BeforeTest()
     {
@@ -32,7 +32,7 @@ public class TestHomePage {
     @Test
     public void HPagetesting()
     {
-        HomePage homePage=new HomePage(driver);
+
         try
         {
          String hometitel=homePage.getHometitle().getText();

@@ -27,7 +27,7 @@ WebDriver driver;
 
         PageFactory.initElements(driver,this);
         if(!HomepageLogo.isDisplayed())
-            throw new IllegalThreadStateException("");
+            throw new IllegalThreadStateException("This is not home page.");
 
     }
 
