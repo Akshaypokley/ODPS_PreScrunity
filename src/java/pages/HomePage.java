@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class HomePage {
 WebDriver driver;
-    @FindBy(xpath = "")
+    @FindBy(xpath = ".//*[@id='form1']/div[3]/div[1]/div[2]")
     WebElement HomepageLogo;
 
     @FindBy(xpath = "")

@@ -3,6 +3,7 @@ package Utilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 /**
  * Created by akshay.pokley on 1/11/2019.
@@ -29,6 +30,12 @@ public class UtilityDirectory {
             case "IE":
                 System.setProperty("webdriver.IE.driver","Driver/IEDriverServer.exe");
                 driver=new FirefoxDriver();
+                driver.manage().window().maximize();
+                break;
+
+            case "HeadLess":
+               // System.setProperty("webdriver.IE.driver","Driver/IEDriverServer.exe");
+                driver=new HtmlUnitDriver();
                 driver.manage().window().maximize();
                 break;
 
