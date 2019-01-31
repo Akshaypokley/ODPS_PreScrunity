@@ -24,6 +24,8 @@ public class getScreenshot {
         File finalDestination = new File(destination);
         FileUtils.copyFile(source, finalDestination);
         //Returns the captured file path
+
+
         return destination;
     }
 }

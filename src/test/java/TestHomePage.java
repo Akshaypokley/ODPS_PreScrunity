@@ -14,6 +14,8 @@ import pages.HomePage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+
+import static Utilities.FullPageScreenshot.PageScreenshot;
 import static Utilities.UtilityDirectory.GetUrl;
 import static Utilities.UtilityDirectory.openBrowser;
 import static Utilities.getScreenshot.Screenshot;
@@ -209,6 +211,7 @@ public class TestHomePage {
                         default:
                             System.out.println("Need To Implemented Test case for -->" + " " + objectName);
                             Screenshot(driver,objectName);
+                            PageScreenshot(driver);
                             Result = "FAIL";
                             Actual="Need To Implemented Test case for -->" + " " + objectName;
                             break;
@@ -232,6 +235,7 @@ public class TestHomePage {
                             Actual="Need To Implemented Test case for -->" + " " + objectName;
                             Result = "FAIL";
                             Screenshot(driver,objectName);
+                            PageScreenshot(driver);
                             break;
                     }
                     break;
