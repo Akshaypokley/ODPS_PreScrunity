@@ -134,6 +134,8 @@ WebElement NeplanLogo;
     @FindBy(xpath = "//div//input[@name='txtEast']")
     WebElement txtEast;
 
+    @FindBy(xpath = ".//*[@id='btnSubmit']")
+    WebElement SubmitBtn;
 
     public Newplan(WebDriver driver)
     {
@@ -142,6 +144,11 @@ WebElement NeplanLogo;
         if(!NeplanLogo.isDisplayed())
         throw new IllegalStateException("This is not ODPS page");
 
+    }
+
+    public void  ClickSubmitBtn()
+    {
+        SubmitBtn.click();
     }
 
     public void setAuthority(String autho)

@@ -5,27 +5,35 @@ import jxl.write.*;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
-import org.testng.annotations.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 import pages.HomePage;
+import pages.Newplan;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static Utilities.FullPageScreenshot.PageScreenshot;
 import static Utilities.UtilityDirectory.GetUrl;
 import static Utilities.UtilityDirectory.openBrowser;
 import static Utilities.getScreenshot.Screenshot;
 import static jxl.format.Colour.*;
-
+import static jxl.format.Colour.PALE_BLUE;
+import static pages.Validationfun.ValdFun;
 
 /**
- * Created by akshay.pokley on 1/11/2019.
+ * Created by akshay.pokley on 2/1/2019.
  */
-public class TestHomePage {
+public class TestNewPlan {
+
     static WebDriver driver;
     public Label l4;
     public static WritableCellFormat cellFormat;
@@ -66,13 +74,14 @@ public class TestHomePage {
     public static int k1;
     public static int rr = 1;
     public static int Rec = 2;
-    public static  HomePage homePage ;
+    public static HomePage homePage ;
+    public static Newplan newplan;
     @BeforeTest
     public void OutputExcelCreation() throws IOException, BiffException, WriteException {
 
-        sourceDocument = Workbook.getWorkbook(new File("TestCaseData/TestHomePage1.xls"));
+        sourceDocument = Workbook.getWorkbook(new File("TestCaseData/NewPlanT.xls"));
         writableTempSource = Workbook.createWorkbook(new File("TestCaseData/temp.xls"), sourceDocument);
-        copyDocument = Workbook.createWorkbook(new File("TestCaseResult/TestHomePageTestReport.xls"));
+        copyDocument = Workbook.createWorkbook(new File("TestCaseResult/TestNewPlanTestReport.xls"));
         sourceSheet = writableTempSource.getSheet(0);
         targetSheet = copyDocument.createSheet("sheet 1", 2);
 
@@ -178,7 +187,7 @@ public class TestHomePage {
 
 
     @Test(dataProvider = "hybridData")
-    public static void HomePageTest(String testcaseName, String keyword, String objectName, String value, String Expected) throws Exception {
+    public static void NewPlanTest(String testcaseName, String keyword, String objectName, String value, String Expected) throws Exception {
 
         if (testcaseName != null && testcaseName.length() != 0) {
 
@@ -199,13 +208,15 @@ public class TestHomePage {
 
         try {
 
-            homePage=new HomePage(driver);
+
+           // newplan=new Newplan(driver);
+
             switch (keyword.toUpperCase()) {
 
                 case "BROWSER CLOSED":
                     switch (objectName) {
                         case "Closed":
-                            driver.close();
+                            driver.quit();
                             Result="PASS";
                             break;
                         default:
@@ -218,9 +229,44 @@ public class TestHomePage {
                     }
                     break;
 
+                case "SELECT":
+                    switch (objectName)
+                    {
+                        case "Select ULB":
+
+                            ValdFun(driver);
+
+                            try{
+                                if ((ExpectedConditions.alertIsPresent()) == null) {
+                                    System.out.println("alert was not present");
+                                } else {
+
+
+                                    Alert alert = driver.switchTo().alert();
+                                    Screenshot(driver, objectName);
+                                    Actual = alert.getText();
+                                    if (Actual.equals(Expected))
+                                        Result = "Pass";
+
+                                    else
+                                        Screenshot(driver, objectName);
+                                        Result = "FAIL";
+   }
+
+                            }catch (Throwable d)
+                        {
+                        }
+                            break;
+
+                    }
+                    break;
                 case "UI":
+
+                    homePage=new HomePage(driver);
                     switch (objectName) {
+
                         case "Get Title":
+
                             WebElement titleUI = homePage.getHometitle();
                             String actual = titleUI.getText();
                             Actual=actual;
@@ -228,6 +274,15 @@ public class TestHomePage {
                                 Result = "PASS";
                             else
                                 Result = "FAIL";
+                            break;
+
+                        case "Click on New Plan":
+                            homePage.ClickonNewPlan();
+                            ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
+                            driver.switchTo().window(tabs2.get(1));
+                            newplan=new Newplan(driver);
+                            Screenshot(driver,objectName);
+                            Result = "PASS";
                             break;
 
                         default:
@@ -272,7 +327,7 @@ public class TestHomePage {
     @DataProvider(name = "hybridData")
     public Object[][] getDataFromDataprovider() throws IOException {
         Object[][] object = null;
-        FileInputStream fis = new FileInputStream("TestCaseData/TestHomePage1.xls");
+        FileInputStream fis = new FileInputStream("TestCaseData/NewPlanT.xls");
         HSSFWorkbook wb = new HSSFWorkbook(fis);
         HSSFSheet sh = wb.getSheet("Applicant");
         //  HSSFRow rows = sh.getRow(1);
@@ -294,5 +349,4 @@ public class TestHomePage {
 
 
     }
-
 }
