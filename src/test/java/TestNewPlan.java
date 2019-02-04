@@ -221,7 +221,7 @@ public class TestNewPlan {
                             break;
                         default:
                             System.out.println("Need To Implemented Test case for -->" + " " + objectName);
-                            Screenshot(driver,objectName);
+                            Screenshot(driver);
                             PageScreenshot(driver);
                             Result = "FAIL";
                             Actual="Need To Implemented Test case for -->" + " " + objectName;
@@ -243,13 +243,13 @@ public class TestNewPlan {
 
 
                                     Alert alert = driver.switchTo().alert();
-                                    Screenshot(driver, objectName);
+                                    Screenshot(driver);
                                     Actual = alert.getText();
                                     if (Actual.equals(Expected))
                                         Result = "Pass";
 
                                     else
-                                        Screenshot(driver, objectName);
+                                        Screenshot(driver);
                                         Result = "FAIL";
    }
 
@@ -281,7 +281,7 @@ public class TestNewPlan {
                             ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
                             driver.switchTo().window(tabs2.get(1));
                             newplan=new Newplan(driver);
-                            Screenshot(driver,objectName);
+                            Screenshot(driver);
                             Result = "PASS";
                             break;
 
@@ -289,7 +289,7 @@ public class TestNewPlan {
                             System.out.println("Need To Implemented Test case for -->" + " " + objectName);
                             Actual="Need To Implemented Test case for -->" + " " + objectName;
                             Result = "FAIL";
-                            Screenshot(driver,objectName);
+                            Screenshot(driver);
                             PageScreenshot(driver);
                             break;
                     }

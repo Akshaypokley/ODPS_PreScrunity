@@ -7,7 +7,6 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.HomePage;
 
@@ -15,6 +14,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import static Utilities.ExtentReportClass.startReport;
 import static Utilities.FullPageScreenshot.PageScreenshot;
 import static Utilities.UtilityDirectory.GetUrl;
 import static Utilities.UtilityDirectory.openBrowser;
@@ -25,7 +25,7 @@ import static jxl.format.Colour.*;
 /**
  * Created by akshay.pokley on 1/11/2019.
  */
-public class TestHomePage {
+public class TestHomePage{
     static WebDriver driver;
     public Label l4;
     public static WritableCellFormat cellFormat;
@@ -67,6 +67,7 @@ public class TestHomePage {
     public static int rr = 1;
     public static int Rec = 2;
     public static  HomePage homePage ;
+
     @BeforeTest
     public void OutputExcelCreation() throws IOException, BiffException, WriteException {
 
@@ -173,7 +174,9 @@ public class TestHomePage {
         copyDocument.close();
         writableTempSource.close();
         sourceDocument.close();
+
     }
+
 
 
 
@@ -206,12 +209,12 @@ public class TestHomePage {
                     switch (objectName) {
                         case "Closed":
                             driver.close();
+
                             Result="PASS";
+
                             break;
                         default:
                             System.out.println("Need To Implemented Test case for -->" + " " + objectName);
-                            Screenshot(driver,objectName);
-                            PageScreenshot(driver);
                             Result = "FAIL";
                             Actual="Need To Implemented Test case for -->" + " " + objectName;
                             break;
@@ -224,18 +227,22 @@ public class TestHomePage {
                             WebElement titleUI = homePage.getHometitle();
                             String actual = titleUI.getText();
                             Actual=actual;
-                            if (actual.equals(Expected))
+                            if (actual.equals(Expected)) {
                                 Result = "PASS";
-                            else
+                                startReport(Result);
+                            }
+                            else{
                                 Result = "FAIL";
+                                startReport(Result);
+                            }
+
                             break;
 
                         default:
                             System.out.println("Need To Implemented Test case for -->" + " " + objectName);
                             Actual="Need To Implemented Test case for -->" + " " + objectName;
                             Result = "FAIL";
-                            Screenshot(driver,objectName);
-                            PageScreenshot(driver);
+                            startReport(Result);
                             break;
                     }
                     break;
@@ -261,13 +268,13 @@ public class TestHomePage {
 
             }
 
-        } catch (NullPointerException n) {
+        } catch (Throwable n) {
+            System.out.println(n.getMessage());
 
         }
 
 
     }
-
 
     @DataProvider(name = "hybridData")
     public Object[][] getDataFromDataprovider() throws IOException {

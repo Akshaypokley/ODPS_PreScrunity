@@ -56,7 +56,7 @@ public class UtilityDirectory {
     public static void  GetUrl(String URL)
 
     {
-        driver.get("http://114.143.6.218:8033/BpamsClient/Prescrutiny/Submission.aspx");
+        driver.get("http://192.168.1.2:8033/bpamsclient/Prescrutiny/submission.aspx");
 
     }
 }
